@@ -14,12 +14,7 @@ class Post extends AppModel {
         return $this->field('id', array('id' => $post, 'user_id' => $user)) !== false;
     }
 
-    public $belongsTo = array(
-        'Category' => array(
-            'className' => 'Category',
-            'foreignKey' => 'category_id'
-        )
-    );
+    public $belongsTo = 'Category';
 
     public $hasAndBelongsToMany = array(
         'Tag' => array(
@@ -29,6 +24,8 @@ class Post extends AppModel {
             'associationForeignKey'  => 'tag_id',
         )
     );
+
+    public $hasMany = 'Image';
 }
 
 ?>
