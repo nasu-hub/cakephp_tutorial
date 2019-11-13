@@ -25,7 +25,11 @@ class Post extends AppModel {
         )
     );
 
-    public $hasMany = 'Image';
+    public $hasMany = array(
+        'Image' => array(
+            'dependent' => true,
+        )
+    );
 }
 
 ?>

@@ -9,3 +9,12 @@
     ?>
 </p>
 <p><?php echo h($post['Post']['body']); ?></p>
+
+<?php
+    $base = $this->Html->url( "/files/image/attachment/" );
+    $cnt = count($post['Image']);
+    for ($i = 0; $i < $cnt; $i++) {
+        echo $this->Html->image( $base . $post['Image'][$i]["dir"] . "/" . $post['Image'][$i]["attachment"], array('width' => '400', 'height' => '300'));
+    }
+
+?>

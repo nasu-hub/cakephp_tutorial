@@ -2,7 +2,7 @@
 
 class PostsController extends AppController {
   public $helpers = array('Html', 'Form', 'Flash');
-  public $uses = array('Post', 'Category', 'Tag');
+  public $uses = array('Post', 'Category', 'Tag', 'Image');
   // PostsControllerの中でもPostモデル使う宣言は必要なのか？書かないとエラー出るのでとりあえず書いたが。Call to a member function find() on null
 
   public function index() {
@@ -32,10 +32,15 @@ class PostsController extends AppController {
     if ($this->request->is('post')) {
       $this->request->data['Post']['category_id'] = $this->request->data['Category']['id'];
       $this->request->data['Tag']['Tag'] = $this->request->data['Tag']['id'];
+
+      $cnt = count($this->request->data['Post']['Images']);
+      for($i =0; $i < $cnt; $i++) {
+        $this->request->data['Image'][$i]['attachment'] = $this->request->data['Post']['Images'][$i];
+      }
       $this->Post->create();
       $this->request->data['Post']['user_id'] = $this->Auth->user('id');
       // debug($this->request->data);
-      if ($this->Post->saveAll($this->request->data)) {
+      if ($this->Post->saveAll($this->request->data, array('deep' => true))) {
         $this->Flash->success(__('Your post has been saved.'));
         return $this->redirect(array('action' => 'index'));
       }
@@ -71,7 +76,12 @@ class PostsController extends AppController {
       $this->Post->$id;
       $this->request->data['Post']['category_id'] = $this->request->data['Category']['id'];
       $this->request->data['Tag']['Tag'] = $this->request->data['Tag']['id'];
-      if ($this->Post->save($this->request->data)) {
+      $cnt = count($this->request->data['Post']['Images']);
+      for($i =0; $i < $cnt; $i++) {
+        $this->request->data['Image'][$i]['attachment'] = $this->request->data['Post']['Images'][$i];
+      }
+      debug($this->request->data);
+      if ($this->Post->saveAll($this->request->data)) {
         debug($this->request->data);
         $this->Flash->success(__('Your post has been updated.'));
         return $this->redirect(array('action' => 'index'));

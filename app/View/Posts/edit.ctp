@@ -16,6 +16,6 @@ echo $this->Form->input('Tag.id', array(
 echo $this->Form->input('title');
 echo $this->Form->input('body', array('rows' => '3'));
 echo $this->Form->input('id', array('type' => 'hidden'));
-echo $this->Form->input('Attachment.0.attachment', array('type' => 'file', 'label' => 'Image'));
+echo $this->Form->input('Images.', array('type' => 'file', 'label' => 'Image', 'multiple'));
 echo $this->Form->end('Save Post');
 ?>
