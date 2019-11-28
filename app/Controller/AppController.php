@@ -55,6 +55,7 @@ class AppController extends Controller {
 
     public function beforeFilter(){
         $this->Auth->allow('index', 'view');
+        $this->set('user', $this->Auth->user());
     }
 
     public function isAuthorized($user) {
