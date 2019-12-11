@@ -40,9 +40,8 @@ class AppController extends Controller {
                 'action' => 'index'
             ),
             'logoutRedirect' => array(
-                'controller' => 'pages',
-                'action' => 'display',
-                'home'
+                'controller' => 'users',
+                'action' => 'login'
             ),
             'authenticate' => array(
                 'Form' => array(
@@ -54,8 +53,7 @@ class AppController extends Controller {
     );
 
     public function beforeFilter(){
-        $this->Auth->allow('index', 'view');
-        $this->set('user', $this->Auth->user());
+        $this->set('userForHeader', $this->Auth->user());
     }
 
     public function isAuthorized($user) {

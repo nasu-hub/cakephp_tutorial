@@ -11,10 +11,14 @@
             'controller' => 'posts',
             'action' => 'add'
         ));
-        if (isset($user)) {
+        echo $this->Html->link('Import CSV',array(
+            'controller' => 'addresses',
+            'action' => 'add'
+        ));
+        if (isset($userForHeader)) {
             echo $this->Html->link('Account', array(
                 'controller' => 'users',
-                'action' => 'view', $user['id']
+                'action' => 'view', $userForHeader['id']
             ));
             echo $this->Html->link('Logout', array(
                 'controller' => 'users',
@@ -31,10 +35,12 @@
             ));
         }
     ?>
+
     <div class="user-status col text-right">
         <span><?php
-            if (isset($user)) {
-                echo "こんにちは！" .$user['username'] ."さん。";
+
+            if (isset($userForHeader['username'])) {
+                echo "こんにちは！{$userForHeader['username'] }さん。";
             }
         ?></span>
     </div>

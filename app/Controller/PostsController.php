@@ -11,6 +11,11 @@ class PostsController extends AppController {
     'sort' => array('type' => 'value')
   );
 
+  public function beforeFilter(){
+    parent::beforeFilter();
+    $this->Auth->allow('index', 'view');
+  }
+
   public function index() {
     $pager_numbers = array(
       'before' => '-',
