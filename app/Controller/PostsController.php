@@ -1,7 +1,9 @@
 <?php
 
 class PostsController extends AppController {
-  public $helpers = array('Html', 'Form');
+  public $helpers = array('Html', 'Form', 'Flash');
+  public $uses = array('Post', 'Category', 'Tag', 'Image');
+  // PostsControllerの中でもPostモデル使う宣言は必要なのか？書かないとエラー出るのでとりあえず書いたが。Call to a member function find() on null
 
   public function index() {
     $this-> set('posts', $this->Post->find('all'));
@@ -20,10 +22,25 @@ class PostsController extends AppController {
   }
 
   public function add() {
+    $this->set('category', $this->Category->find('list', array(
+      'fields' => array('id', 'name')
+    )));
+    $this->set('tag', $this->Post->Tag->find('list', array(
+      'fields' => array('id', 'name')
+    )));
+
     if ($this->request->is('post')) {
+      $this->request->data['Post']['category_id'] = $this->request->data['Category']['id'];
+      $this->request->data['Tag']['Tag'] = $this->request->data['Tag']['id'];
+
+      $cnt = count($this->request->data['Post']['Images']);
+      for($i =0; $i < $cnt; $i++) {
+        $this->request->data['Image'][$i]['attachment'] = $this->request->data['Post']['Images'][$i];
+      }
       $this->Post->create();
       $this->request->data['Post']['user_id'] = $this->Auth->user('id');
-      if ($this->Post->save($this->request->data)) {
+      // debug($this->request->data);
+      if ($this->Post->saveAll($this->request->data, array('deep' => true))) {
         $this->Flash->success(__('Your post has been saved.'));
         return $this->redirect(array('action' => 'index'));
       }
@@ -32,6 +49,13 @@ class PostsController extends AppController {
   }
 
   public function edit($id = null) {
+    $this-> set('category', $this->Category->find('list', array(
+      'fields' => array('id', 'name')
+    )));
+    $this->set('tag', $this->Post->Tag->find('list', array(
+      'fields' => array('id', 'name')
+    )));
+
     if (!$id) {
       throw new NotFoundException(__('Invalid post'));
     }
@@ -41,9 +65,24 @@ class PostsController extends AppController {
       throw new NotFoundException(__('Invalid post'));
     }
 
+    $tmpTag = array();
+    foreach ($post['Tag'] as $tmp) {
+      $tmpTag[] = $tmp['id'];
+    }
+
+    $this->set('selected', $tmpTag);
+
     if ($this->request->is(array('post', 'put'))) {
-      $this->Post-> $id;
-      if ($this->Post->save($this->request->data)) {
+      $this->Post->$id;
+      $this->request->data['Post']['category_id'] = $this->request->data['Category']['id'];
+      $this->request->data['Tag']['Tag'] = $this->request->data['Tag']['id'];
+      $cnt = count($this->request->data['Post']['Images']);
+      for($i =0; $i < $cnt; $i++) {
+        $this->request->data['Image'][$i]['attachment'] = $this->request->data['Post']['Images'][$i];
+      }
+      debug($this->request->data);
+      if ($this->Post->saveAll($this->request->data)) {
+        debug($this->request->data);
         $this->Flash->success(__('Your post has been updated.'));
         return $this->redirect(array('action' => 'index'));
       }
