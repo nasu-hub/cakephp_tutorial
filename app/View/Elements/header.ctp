@@ -2,6 +2,9 @@
 <?php echo $this->Html->script('header.js') ?>
 
 <nav class="nav d-inline-flex align-items-center">
+    <div>
+        <h1 class="blog-title m-3">Cooking Blog</h1>
+    </div>
     <?php
         echo $this->Html->link('Home',array(
             'controller' => 'posts',

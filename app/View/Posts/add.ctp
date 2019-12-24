@@ -45,3 +45,4 @@
         echo $this->Form->end();
     ?>
 </div>
+<?php echo $this->element('sql_dump'); ?>

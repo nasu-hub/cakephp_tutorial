@@ -18,11 +18,10 @@ class PostsController extends AppController {
 
   public function index() {
     $pager_numbers = array(
-      'before' => '-',
-      'after' => '-',
       'modules' => 10,
       'separator' => ' ',
-      'class' => 'pagenumbers'
+      'class' => 'page-item page-link pagenumbers',
+      'tag' => 'li'
     );
     $this->set('pager_numbers', $pager_numbers);
     $this->set('posts', $this->Post->find('all'));
@@ -33,11 +32,6 @@ class PostsController extends AppController {
       'limit' => 5,
     );
     $this->set('posts', $this->paginate());
-    $categories = $this->Post->Category->find('list');
-    $this->set(compact('categories'));
-
-    $tags = $this->Post->Tag->find('list');
-    $this->set(compact('tags'));
   }
 
   public function view($id = null) {
@@ -50,21 +44,9 @@ class PostsController extends AppController {
       throw new NotFoundException(__('Invalid post'));
     }
     $this->set('post', $post);
-    $categories = $this->Post->Category->find('list');
-    $this->set(compact('categories'));
-
-    $tags = $this->Post->Tag->find('list');
-    $this->set(compact('tags'));
   }
 
   public function add() {
-    $this->set('categories', $this->Category->find('list', array(
-      'fields' => array('id', 'name')
-    )));
-    $this->set('tags', $this->Post->Tag->find('list', array(
-      'fields' => array('id', 'name')
-    )));
-
     if ($this->request->is('post')) {
       $this->request->data['Post']['category_id'] = $this->request->data['Category']['id'];
       $this->request->data['Tag']['Tag'] = $this->request->data['Tag']['id'];
@@ -75,7 +57,7 @@ class PostsController extends AppController {
       }
       $this->Post->create();
       $this->request->data['Post']['user_id'] = $this->Auth->user('id');
-      // debug($this->request->data);
+
       if ($this->Post->saveAll($this->request->data, array('deep' => true))) {
         $this->Flash->success(__('Your post has been saved.'));
         return $this->redirect(array('action' => 'index'));
@@ -85,13 +67,6 @@ class PostsController extends AppController {
   }
 
   public function edit($id = null) {
-    $this-> set('categories', $this->Category->find('list', array(
-      'fields' => array('id', 'name')
-    )));
-    $this->set('tags', $this->Post->Tag->find('list', array(
-      'fields' => array('id', 'name')
-    )));
-
     if (!$id) {
       throw new NotFoundException(__('Invalid post'));
     }
@@ -100,7 +75,6 @@ class PostsController extends AppController {
     if (!$post) {
       throw new NotFoundException(__('Invalid post'));
     }
-    // debug($post);
 
     $tmpTag = array();
     foreach ($post['Tag'] as $tmp) {
@@ -114,17 +88,14 @@ class PostsController extends AppController {
     foreach ($post['Image'] as $tmpImg) {
       $dirArr[] = $tmpImg['dir'];
     }
-    // debug($dirArr);
 
     if ($this->request->is(array('post', 'put'))) {
-      // debug($this->request->data);
       $this->Post->$id;
       $this->request->data['Post']['category_id'] = $this->request->data['Category']['id'];
       $this->request->data['Tag']['Tag'] = $this->request->data['Tag']['id'];
 
       $cnt = count($this->request->data['Post']['Images']);
       for($i =0; $i < $cnt; $i++) {
-        // $this->request->data['Image'][$i]['attachment'] = $this->request->data['Post']['Images'][$i];
 
         $fileName = $this->request->data['Post']['Images'][$i];
 
@@ -154,7 +125,6 @@ class PostsController extends AppController {
         }
       }
 
-      // debug($this->request->data);
       if ($this->Post->saveAll($this->request->data)) {
         $this->Flash->success(__('Your post has been updated.'));
         return $this->redirect(array('action' => 'index'));

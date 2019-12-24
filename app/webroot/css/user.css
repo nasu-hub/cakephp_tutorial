@@ -1,0 +1,5 @@
+input#UserPostalCode,
+select#UserPrefecture,
+select#UserCity {
+    width: 50%;
+}

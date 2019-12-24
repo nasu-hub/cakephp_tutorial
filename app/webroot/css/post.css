@@ -10,15 +10,14 @@ h2 a:hover {
 	opacity: 0.5;
 }
 .blog-post-tag {
-	background-color:#FEF2E4;
+	background-color: #805A3B;
 	transition: all 0.3s ease 0s;
+	color: ivory;
 }
 .blog-post-tag:hover {
-	background-color:#FEF2E4;
+	background-color: #805A3B;
+	color: ivory;
 	opacity: 0.5;
-}
-button.blog-post-tag {
-	color: #805A3B;
 }
 .btn-action {
 	background-color: #FD974F;
@@ -31,6 +30,10 @@ button.blog-post-tag {
 .btn-action:hover {
 	color: #FD974F;
 	opacity: 0.5;
+}
+.card {
+	background-color: #FEF2E4;
+	border: 2px solid #805A3B;
 }
 
 /* この50%はどこで使っているか確認する */

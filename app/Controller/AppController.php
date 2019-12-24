@@ -31,7 +31,7 @@ App::uses('Controller', 'Controller');
  * @link		https://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
-
+    public $uses = array('Post', 'Category', 'Tag', 'Image', 'PostsTag');
     public $components = array(
         'Flash',
         'Auth' => array(
@@ -54,6 +54,12 @@ class AppController extends Controller {
 
     public function beforeFilter(){
         $this->set('userForHeader', $this->Auth->user());
+        $this-> set('categories', $this->Category->find('list', array(
+            'fields' => array('id', 'name')
+          )));
+          $this->set('tags', $this->Post->Tag->find('list', array(
+            'fields' => array('id', 'name')
+          )));
     }
 
     public function isAuthorized($user) {

@@ -122,29 +122,34 @@ p.error em {
 }
 
 /* Pagers */
-.pagers {
+/* .pagers {
 	text-align: center;
 	font-size: large;
-}
-.pagers a, .pagers span {
+} */
+/* .pagers a, .pagers li {
     padding: 0 0.2rem;;
     color: #805A3B;
     transition: all 0.3s ease 0s;
-}
-.pagers a:hover, .pagers span:hover{
+} */
+.pagers a:hover, .pagers li:hover{
 	color: #805A3B;
 	text-decoration: none;
 	opacity: 0.5;
+	background-color: #805A3B;
 }
-.pagers .disabled {
+.pagers.disabled {
 	color: #ccc;
+}
+.current {
+    background-color: #805A3B;
+	color: ivory;
 }
 
 /* Login */
 body {
     margin: 0;
     padding: 0;
-    background-color: #FEF2E4;
+    background-color: #FEF2E4 !important;
     height: 100vh;
 }
 #login .container #login-row #login-column #login-box {

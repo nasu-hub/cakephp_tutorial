@@ -1,6 +1,9 @@
 #header {
     background-color: #FD974F;
-    height: 4rem;
+    height: 5rem;
+}
+.blog-title {
+    color: ivory;
 }
 
 a:hover {

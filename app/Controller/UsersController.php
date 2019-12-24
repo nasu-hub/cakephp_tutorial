@@ -5,7 +5,7 @@ App::uses('AppController', 'Controller');
  */
 class UsersController extends AppController {
 
-	public $uses = array('Address');
+	public $uses = array('User', 'Address');
 	public $components = array('Session');
 
 	public function beforeFilter(){

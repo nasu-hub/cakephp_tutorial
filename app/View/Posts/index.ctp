@@ -1,28 +1,20 @@
 <?php echo $this->Html->css('post'); ?>
-<!-- <?php echo $this->Html->script('post/image.slide.js') ?> -->
+<?php //echo $this->Html->script('post/image.slide.js') ?>
 
 <div class="container">
-    <div class="blog-header">
-        <h1 class="blog-title my-3">Cooking Blog</h1>
-    </div>
-    <div class="row">
+    <div class="row mt-5">
         <div class="col-sm-8 blog-main">
             <?php foreach ($posts as $post): ?>
-                <div class="blog-post card border-secondary mb-3">
+                <div class="blog-post card mb-3">
                     <div>
                         <?php
                             $base = $this->Html->url( "/files/image/attachment/" );
                             $cnt = count($post['Image']);
                             for ($i = 0; $i < $cnt; $i++) {
-                                // echo '<p class="wrapper-img">';
                                 echo $this->Html->image( $base . $post['Image'][$i]["dir"] . "/" . $post['Image'][$i]["attachment"], array('width' => '100%'));
-                                // echo '</p>';
                             }
                         ?>
                     </div>
-                    <!-- <div class="wrapper">
-                        <p id="nav-r"><a href="#">次へ</a></p>
-                        <p id="nav-l"><a href="#">戻る</a></p> -->
                     <div class="card-body">
                         <div class="d-flex bd-highlight mb-3">
                             <h2 class="blog-post-title card-title mr-auto">
@@ -64,9 +56,6 @@
             <?php endforeach; ?>
             <?php unset($post); ?>
         </div>
-        <!-- <div class="col-sm-3 col-cm-offset-1 blog-sidebar">
-            <?php //echo $this->element('searchForm') ?>
-        </div> -->
     </div>
 </div>
 <div class="my-3">
