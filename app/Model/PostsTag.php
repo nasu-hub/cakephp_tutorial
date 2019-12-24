@@ -13,7 +13,8 @@ class PostsTag extends AppModel {
  *
  * @var mixed False or table name
  */
-	public $useTable = 'posts_tag';
+	// public $useTable = 'posts_tags';
+	public $name = 'PostsTag';
 
 /**
  * Validation rules

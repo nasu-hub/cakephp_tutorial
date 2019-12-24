@@ -1,0 +1,57 @@
+#header {
+    background-color: #FD974F;
+    height: 5rem;
+}
+.blog-title {
+    color: ivory;
+}
+
+a:hover {
+    text-decoration: none;
+}
+nav {
+    width: 100%;
+}
+
+.nav a {
+    margin: 1rem;
+    color: ivory;
+}
+.user-status {
+    color: #C60000;
+    text-align: right;
+}
+
+/* Search Form */
+
+.icon-search {
+    margin: 0 0 0 auto;
+    padding-right: 20px;
+    z-index: 2;
+    color: ivory;
+}
+.search-box {
+    width: 100%;
+    background-color: rgba(254, 242, 228, 0.7);
+    text-align: center;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.search-box .form-group {
+    text-align: left;
+}
+.search-box .form-group label {
+    font-weight: bold;
+}
+
+fieldset {
+    position: relative;
+}
+.search-box .btn-reset {
+    position: absolute;
+    right: 1rem;
+}

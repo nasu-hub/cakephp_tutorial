@@ -2,11 +2,36 @@
 
 class PostsController extends AppController {
   public $helpers = array('Html', 'Form', 'Flash');
-  public $uses = array('Post', 'Category', 'Tag', 'Image');
-  // PostsControllerの中でもPostモデル使う宣言は必要なのか？書かないとエラー出るのでとりあえず書いたが。Call to a member function find() on null
+  public $uses = array('Post', 'Category', 'Tag', 'Image', 'PostsTag');
+  public $components = array('Search.Prg');
+  public $presetVars = array(
+    'category_id' => array('type' => 'value'),
+    'title' => array('type' => 'value'),
+    'tag_id' => array('type' => 'checkbox'),
+    'sort' => array('type' => 'value')
+  );
+
+  public function beforeFilter(){
+    parent::beforeFilter();
+    $this->Auth->allow('index', 'view');
+  }
 
   public function index() {
-    $this-> set('posts', $this->Post->find('all'));
+    $pager_numbers = array(
+      'modules' => 10,
+      'separator' => ' ',
+      'class' => 'page-item page-link pagenumbers',
+      'tag' => 'li'
+    );
+    $this->set('pager_numbers', $pager_numbers);
+    $this->set('posts', $this->Post->find('all'));
+
+    $this->Prg->commonProcess();
+    $this->paginate = array(
+      'conditions' => $this->Post->parseCriteria($this->passedArgs),
+      'limit' => 5,
+    );
+    $this->set('posts', $this->paginate());
   }
 
   public function view($id = null) {
@@ -22,13 +47,6 @@ class PostsController extends AppController {
   }
 
   public function add() {
-    $this->set('category', $this->Category->find('list', array(
-      'fields' => array('id', 'name')
-    )));
-    $this->set('tag', $this->Post->Tag->find('list', array(
-      'fields' => array('id', 'name')
-    )));
-
     if ($this->request->is('post')) {
       $this->request->data['Post']['category_id'] = $this->request->data['Category']['id'];
       $this->request->data['Tag']['Tag'] = $this->request->data['Tag']['id'];
@@ -39,7 +57,7 @@ class PostsController extends AppController {
       }
       $this->Post->create();
       $this->request->data['Post']['user_id'] = $this->Auth->user('id');
-      // debug($this->request->data);
+
       if ($this->Post->saveAll($this->request->data, array('deep' => true))) {
         $this->Flash->success(__('Your post has been saved.'));
         return $this->redirect(array('action' => 'index'));
@@ -49,13 +67,6 @@ class PostsController extends AppController {
   }
 
   public function edit($id = null) {
-    $this-> set('category', $this->Category->find('list', array(
-      'fields' => array('id', 'name')
-    )));
-    $this->set('tag', $this->Post->Tag->find('list', array(
-      'fields' => array('id', 'name')
-    )));
-
     if (!$id) {
       throw new NotFoundException(__('Invalid post'));
     }
@@ -71,18 +82,50 @@ class PostsController extends AppController {
     }
 
     $this->set('selected', $tmpTag);
+    $this->set('post', $post);
+
+    $dirArr = array();
+    foreach ($post['Image'] as $tmpImg) {
+      $dirArr[] = $tmpImg['dir'];
+    }
 
     if ($this->request->is(array('post', 'put'))) {
       $this->Post->$id;
       $this->request->data['Post']['category_id'] = $this->request->data['Category']['id'];
       $this->request->data['Tag']['Tag'] = $this->request->data['Tag']['id'];
+
       $cnt = count($this->request->data['Post']['Images']);
       for($i =0; $i < $cnt; $i++) {
-        $this->request->data['Image'][$i]['attachment'] = $this->request->data['Post']['Images'][$i];
+
+        $fileName = $this->request->data['Post']['Images'][$i];
+
+        if (array_key_exists($i, $dirArr)) {
+          $move_to_dir = "../webroot/files/image/attachment/" . $dirArr[$i];
+        } else {
+          $move_to_dir = null;
+        }
+
+        if (file_exists($move_to_dir) && $this->request->data['Post']['Images'][$i]['name']) {
+          // ファイル更新
+          foreach (glob($move_to_dir. "/" .'*') as $file) {
+            if ($file) {
+              unlink($file);
+            }
+          }
+          move_uploaded_file($fileName['tmp_name'], $move_to_dir. "/" .$fileName['name']);
+
+          $data = array(
+            'id' => $dirArr[$i],
+            'attachment' => $fileName['name']
+          );
+          $this->Image->save($data);
+        } elseif ((file_exists($move_to_dir) === false) && $this->request->data['Post']['Images'][$i]['name']) {
+          // ファイル追加
+          $this->request->data['Image'][$i]['attachment'] = $this->request->data['Post']['Images'][$i];
+        }
       }
-      debug($this->request->data);
+
       if ($this->Post->saveAll($this->request->data)) {
-        debug($this->request->data);
         $this->Flash->success(__('Your post has been updated.'));
         return $this->redirect(array('action' => 'index'));
       }

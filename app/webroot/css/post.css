@@ -1,0 +1,134 @@
+a:hover {
+	text-decoration: none;
+}
+h2 a {
+	color: #805A3B;
+	transition: all 0.3s ease 0s;
+}
+h2 a:hover {
+	color: #805A3B;
+	opacity: 0.5;
+}
+.blog-post-tag {
+	background-color: #805A3B;
+	transition: all 0.3s ease 0s;
+	color: ivory;
+}
+.blog-post-tag:hover {
+	background-color: #805A3B;
+	color: ivory;
+	opacity: 0.5;
+}
+.btn-action {
+	background-color: #FD974F;
+	transition: all 0.3s ease 0s;
+}
+.btn-action a {
+	color: ivory;
+}
+
+.btn-action:hover {
+	color: #FD974F;
+	opacity: 0.5;
+}
+.card {
+	background-color: #FEF2E4;
+	border: 2px solid #805A3B;
+}
+
+/* この50%はどこで使っているか確認する */
+.img-thumnail {
+	width: 50%;
+}
+
+/* Add Post */
+.img_pre img{
+	margin-top: 10px;
+	margin-right: 10px;
+	width: 200px;
+	height: 150px;
+}
+
+/* Slide Image */
+#slide {
+	position: relative;
+}
+#slide .img-modal {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+
+	/* 画像リサイズ */
+	width: 380px;
+	height: 280px;
+	object-fit: contain;
+}
+/* Modal */
+.modal-open img {
+	width: 400px;
+	height: 300px;
+}
+.modal {
+	display: none;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+.modal-bg {
+	background: rgba(128, 90, 59, 0.7);
+	height: 100vh;
+	position: absolute;
+	width: 100%;
+}
+.modal-content {
+	background: #FEF2E4;
+	left: 50%;
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 400px;
+	height: 300px;
+}
+a.modal-close {
+	margin: 0 0 0 auto;
+	padding: 5px;
+	z-index: 1;
+}
+.wr-nav {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#nav-l , #nav-r {
+	z-index: 1;
+	width: 100%;
+	padding: 5px;
+}
+
+#nav-r {
+	text-align: right;
+}
+
+.modal-content .fas {
+	color: #805A3B;
+}
+
+/* Edit Image */
+
+.image-box {
+	height: 150px;
+	width: 200px;
+	position: relative;
+}
+.icon-clear {
+	color: #444444b0;
+	position: absolute;
+	top: 5%;
+	left: 85%;
+}

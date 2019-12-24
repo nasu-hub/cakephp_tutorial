@@ -28,17 +28,25 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 	<?php
 		echo $this->Html->meta('icon');
 
-		echo $this->Html->css('cake.generic');
+		// echo $this->Html->css('cake.generic');
+		echo $this->Html->css('common');
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
+	<!-- Bootstrap の CSS -->
+	<?= $this->Html->css('bootstrap/bootstrap.min.css') ?>
+	<!-- jQuery -->
+	<?= $this->Html->script('jquery-3.4.1.min.js') ?>
+	<!-- Bootstrap の JS -->
+	<?= $this->Html->script('bootstrap/bootstrap.min.js') ?>
+	<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 </head>
 <body>
 	<div id="container">
 		<div id="header">
-			<h1><?php echo $this->Html->link($cakeDescription, 'https://cakephp.org'); ?></h1>
+			<?php echo $this->element('header') ?>
 		</div>
 		<div id="content">
 
@@ -47,15 +55,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 			<?php echo $this->fetch('content'); ?>
 		</div>
 		<div id="footer">
-			<?php echo $this->Html->link(
-					$this->Html->image('cake.power.gif', array('alt' => $cakeDescription, 'border' => '0')),
-					'https://cakephp.org/',
-					array('target' => '_blank', 'escape' => false, 'id' => 'cake-powered')
-				);
-			?>
-			<p>
-				<?php echo $cakeVersion; ?>
-			</p>
+			<?php echo $this->element('footer') ?>
 		</div>
 	</div>
 	<?php //echo $this->element('sql_dump'); ?>
