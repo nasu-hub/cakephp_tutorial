@@ -29,7 +29,7 @@ class PostsController extends AppController {
     $this->Prg->commonProcess();
     $this->paginate = array(
       'conditions' => $this->Post->parseCriteria($this->passedArgs),
-      'limit' => 5,
+      'limit' => 10,
     );
     $this->set('posts', $this->paginate());
   }
