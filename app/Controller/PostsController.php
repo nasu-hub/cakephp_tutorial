@@ -53,11 +53,12 @@ class PostsController extends AppController {
 
       $cnt = count($this->request->data['Post']['Images']);
       for($i = 0; $i < $cnt; $i++) {
-        $this->request->data['Image'][$i]['attachment'] = $this->request->data['Post']['Images'][$i];
+        if($this->request->data['Post']['Images'][$i]['error'] === 0) {
+          $this->request->data['Image'][$i]['attachment'] = $this->request->data['Post']['Images'][$i];
+        }
       }
       $this->Post->create();
       $this->request->data['Post']['user_id'] = $this->Auth->user('id');
-
       if ($this->Post->saveAll($this->request->data, array('deep' => true))) {
         $this->Flash->success(__('Your post has been saved.'));
         return $this->redirect(array('action' => 'index'));
