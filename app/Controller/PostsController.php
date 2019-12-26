@@ -19,8 +19,8 @@ class PostsController extends AppController {
   public function index() {
     $pager_numbers = array(
       'modules' => 10,
-      'separator' => ' ',
-      'class' => 'page-item page-link pagenumbers',
+      'separator' => '',
+      'class' => 'pagenumbers',
       'tag' => 'li'
     );
     $this->set('pager_numbers', $pager_numbers);
@@ -52,7 +52,7 @@ class PostsController extends AppController {
       $this->request->data['Tag']['Tag'] = $this->request->data['Tag']['id'];
 
       $cnt = count($this->request->data['Post']['Images']);
-      for($i =0; $i < $cnt; $i++) {
+      for($i = 0; $i < $cnt; $i++) {
         $this->request->data['Image'][$i]['attachment'] = $this->request->data['Post']['Images'][$i];
       }
       $this->Post->create();
