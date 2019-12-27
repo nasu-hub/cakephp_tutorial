@@ -1,5 +1,4 @@
 <?php echo $this->Html->css('post'); ?>
-<?php //echo $this->Html->script('post/image.slide.js') ?>
 
 <div class="container">
     <div class="row mt-5">
@@ -9,10 +8,13 @@
                     <div>
                         <?php
                             $base = $this->Html->url( "/files/image/attachment/" );
-                            $cnt = count($post['Image']);
-                            for ($i = 0; $i < $cnt; $i++) {
-                                echo $this->Html->image( $base . $post['Image'][$i]["dir"] . "/" . $post['Image'][$i]["attachment"], array('width' => '100%'));
-                            }
+                            // $cnt = count($post['Image']);
+                            // for ($i = 0; $i < $cnt; $i++) {
+                            //     echo $this->Html->image($base . $post['Image'][$i]["dir"] . "/" . $post['Image'][$i]["attachment"], array('width' => '100%'));
+                            // }
+                            if ($post['Image']) {
+                            echo $this->Html->image($base . $post['Image'][0]["dir"] . "/" . $post['Image'][0]["attachment"], array('width' => '100%'));
+                            };
                         ?>
                     </div>
                     <div class="card-body">
@@ -45,11 +47,11 @@
                         </div>
                         <p class="blog-post-created">投稿日：<?php echo $post['Post']['created']; ?></p>
                         <p class="blog-post-category">カテゴリ：<?php echo $post['Category']['name']; ?></p>
-                        <p>
+                        <ul class="blog-post-tag">
                             <?php foreach ($post['Tag'] as $viewTag): ?>
-                                <button type="button" class="btn btn-light btn-sm blog-post-tag "><?php echo h($viewTag['name']); ?></button>
+                                <li><a href="#"><?php echo h($viewTag['name']); ?></a></li>
                             <?php endforeach; ?>
-                        </p>
+                        </ul>
                         <p class="blog-post-body card-text"><?php echo nl2br(h($post['Post']['body'])); ?></p>
                     </div>
                 </div>

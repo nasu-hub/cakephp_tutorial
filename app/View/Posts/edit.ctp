@@ -50,8 +50,6 @@
         ?>
         <?php for ($i = 0; $i < $cnt; $i++): ?>
             <div class="wrapper-img">
-            <!--あとで消す -->
-            <div><?php echo $post['Image'][$i]['dir'] ?></div>
             <div class="image-box">
                 <?php
                     echo $this->Html->image( $base . $post['Image'][$i]["dir"] . "/" . $post['Image'][$i]["attachment"], array('width' => '200', 'height' => '150'));

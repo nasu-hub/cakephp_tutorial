@@ -30,6 +30,7 @@
                     'label' => 'タグ',
                     'multiple' => 'checkbox',
                     'options' => $tags,
+                    'class' => 'form-control tag',
                 ));
 
                 echo $this->Form->button('検索', array(
