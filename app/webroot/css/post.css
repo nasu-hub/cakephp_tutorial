@@ -57,7 +57,6 @@ h2 a:hover {
 
 .blog-post-tag a::after {
     position: absolute;
-    top: -1;
     left: -7px;;
     width: 0;
     height: 0;
